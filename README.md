@@ -36,19 +36,16 @@ Create a kubernetes manifest for a pod which will containa ToDo app container:
 1. DaemonSet requirements:
     1. Container: busyboxplus:curl
     1. Resource requests and limits should be present
-    1. Every 5 seconds it should execue a `curl` command to a nodePort service of a todoapp (port 30007kubec)
+    1. Every 5 seconds it should execue a `curl` command to a clusterIp service of a todoapp.
 1. Createa a `cronjob.yml` file with a CrobJob manifest.
 1. CrobJob requirements:
     1. Container: `busyboxplus:curl`
     1. Resource requests and limits
-    1. Every 4 minutes it should call a `/api/health` endpoint of todoapp via a nodePort service (port 30007).
+    1. Every 4 minutes it should call a `/api/health` endpoint of todoapp via a clusterIp service.
     1. Should keep 10 successful runs in history
     1. Should keep 5 failed runs in history
     1. Should have a `concurrencyPolicy` set to `Allow`
 1. Both new manifests should belong to `mateapp` namespace
-1. `README.md` should be updated with the instructions on how to deploy the app to k8s
-1. `README.md` Should have explained you choice of resources requests and limits
-1. `README.md` Should have explained your choice of HPA configuration
-1. `README.md` Should have explained your strategy configuration (Why such numbers)
-1. `README.md` Should have explained how to access the app after deployment
+1. `README.md` should be updated with the instructions on how to deploy `daemonset.yml` and `cronjob.yml` to the cluster.
+1. `README.md` should be updated with the instructions on how to validate the solution. (Logs for the `daemonset` and `cronjob` should be present)
 1. Create PR with your changes and attach it for validation on a platform.
