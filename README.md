@@ -32,16 +32,19 @@ Now you can browse the [API](http://localhost:8000/api/) or start on the [landin
 Create a kubernetes manifest for a pod which will containa ToDo app container:
 
 1. Fork this repository.
-1. Create a `deployment.yml` file with a deployment for the app.
-1. Deployment should have
-    1. Strategy: RollingUpdate
-    1. Resource requests and limits (in idle state you should have 2 pods running)
-    1. Pod spec should be same as for pods manifest
-1. Createa a `hpa.yml` file with a Horizontal Pod Autoscaler for the app.
-1. Autoscaler should define
-    1. Minimum number of pods as 2
-    2. Maximum number of pods as 5
-    3. Autoscale should be triggered by both CPU and Memory
+1. Create a `daemonset.yml` file with a daemonset.
+1. DaemonSet requirements:
+    1. Container: busyboxplus:curl
+    1. Resource requests and limits should be present
+    1. Every 5 seconds it should execue a `curl` command to a nodePort service of a todoapp (port 30007kubec)
+1. Createa a `cronjob.yml` file with a CrobJob manifest.
+1. CrobJob requirements:
+    1. Container: `busyboxplus:curl`
+    1. Resource requests and limits
+    1. Every 4 minutes it should call a `/api/health` endpoint of todoapp via a nodePort service (port 30007).
+    1. Should keep 10 successful runs in history
+    1. Should keep 5 failed runs in history
+    1. Should have a `concurrencyPolicy` set to `Allow`
 1. Both new manifests should belong to `mateapp` namespace
 1. `README.md` should be updated with the instructions on how to deploy the app to k8s
 1. `README.md` Should have explained you choice of resources requests and limits
